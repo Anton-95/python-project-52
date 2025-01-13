@@ -5,7 +5,7 @@ dev:
 	uv run python manage.py runserver
 
 start-render:
-	uv run gunicorn task_manager.wsgi:application --bind 0.0.0.0:8000
+	gunicorn task_manager.wsgi:application --bind 0.0.0.0:8000
 
 build:
 	./build.sh
