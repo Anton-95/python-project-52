@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = "~=3.11"
 dependencies = [
     "django>=5.1.4",
+    "django-bootstrap5>=24.3",
     "gunicorn>=23.0.0",
 ]
 
