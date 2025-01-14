@@ -1,0 +1,19 @@
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+<!DOCTYPE html>
+<html lang="ru-ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Менеджер задач Hexlet</title>
+</head>
+     <body class="d-flex flex-column min-vh-100">
+        {% include "navbar.html" %}
+
+        {% block content %}{% endblock content %}
+
+        {% include "footer.html" %}
+    </body>
+</html>
