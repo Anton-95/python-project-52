@@ -5,9 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = "~=3.11"
 dependencies = [
+    "dj-database-url>=2.3.0",
     "django>=5.1.4",
     "django-bootstrap5>=24.3",
+    "django-debug-toolbar>=5.0.1",
     "gunicorn>=23.0.0",
+    "python-dotenv>=1.0.1",
 ]
 
 [tool.hatch.build.targets.sdist]
