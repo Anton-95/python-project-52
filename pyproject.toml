@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [tool.hatch.build.targets.sdist]
-include = ["task_manager"]
+include = ["task_manager"]  
 
 [tool.hatch.build.targets.wheel]
 include = ["task_manager"]

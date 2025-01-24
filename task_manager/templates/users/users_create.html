@@ -1,0 +1,12 @@
+{% extends '../layout.html' %}
+{% block content %}
+<div class="container wrapper flex-grow-1">
+    <h1 class="my-4">{{ title }}</h1>
+
+<form action="{% url 'users_create' %}" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input class="btn btn-primary" type="submit" value="{{ button }}">
+</form>
+</div>
+{% endblock %}

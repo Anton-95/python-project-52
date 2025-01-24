@@ -1,23 +1,41 @@
 {% load django_bootstrap5 %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light ms-3">
-    <a class="navbar-brand" href="/">Менеджер задач</a>
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-            <a class="nav-link" href="/users/">Пользователи</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/login/">Вход</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/users/create/">Регистрация</a>
-            </li>
-        </ul>
-    </div>
+<a class="navbar-brand" href="/">Менеджер задач</a>
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'users' %}">Пользователи</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="/statuses/">Статусы</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/labels/">Метки</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/tasks/">Задачи</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <form action="{% url 'logout' %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <input class="btn nav-link" type="submit" value="Выход">
+            </form>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Вход</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'users_create' %}">Регистрация</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
 </nav>

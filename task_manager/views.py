@@ -1,5 +1,12 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.contrib.auth.views import LoginView
+# from django.contrib.auth.forms import AuthenticationForm
 
 
-def index(request):
-    return render(request, 'index.html')
+class CustomLoginView(LoginView):
+    template_name = "login.html"
+    # form_class = AuthenticationForm
+
+    def form_valid(self, form):
+        messages.success(self.request, "Вы успешно вошли в систему")
+        return super().form_valid(form)

@@ -1,0 +1,34 @@
+{% extends '../layout.html' %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+<h1 class="my-4">Пользователи</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя пользователя</th>
+            <th>Полное имя</th>
+            <th>Дата создания</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    {% for user in users %}
+    <tbody>
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.created_at }}</td>
+            <td>
+                <a href="{% url 'users_update' user.id %}">Изменить</a>
+                <br>
+                <a href="{% url 'users_delete' user.id %}">Удалить</a>
+            </td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+</div>
+{% endblock content %}
