@@ -1,0 +1,39 @@
+{% extends '../layout.html' %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+<h1 class="my-4">Статусы</h1>
+<a class="btn btn-primary mb-3" href="{% url 'status_create' %}">Создать статус</a>
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Дата создания</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    {% for status in statuses %}
+
+    <tbody>
+        <tr>
+            <td>{{ status.id }}</td>
+            <td>{{ status.name }}</td>
+            <td>{{ status.created_at }}</td>
+            <td>
+                <a href="{% url 'index' status.id %}">Изменить</a>
+                <br>
+                <a href="{% url 'index' status.id %}">Удалить</a>
+            </td>
+        </tr>
+    </tbody>
+
+    {% endfor %}
+
+</table>
+
+</div>
+{% endblock content %}
