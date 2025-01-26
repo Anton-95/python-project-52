@@ -16,7 +16,7 @@
         </tr>
     </thead>
 
-    {% for status in statuses %}
+{% for status in statuses %}
 
     <tbody>
         <tr>
@@ -24,14 +24,14 @@
             <td>{{ status.name }}</td>
             <td>{{ status.created_at }}</td>
             <td>
-                <a href="{% url 'index' status.id %}">Изменить</a>
+                <a href="{% url 'status_update' status.id %}">Изменить</a>
                 <br>
-                <a href="{% url 'index' status.id %}">Удалить</a>
+                <a href="{% url 'status_delete' status.id %}">Удалить</a>
             </td>
         </tr>
     </tbody>
 
-    {% endfor %}
+{% endfor %}
 
 </table>
 
