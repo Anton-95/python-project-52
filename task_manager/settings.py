@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ["webserver", "127.0.0.1", "task-manager-ihxz.onrender.com"]
 # Application definition
 
 INSTALLED_APPS = [
+    "task_manager.users",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,8 +45,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "task_manager",
-    "task_manager.users",
     "task_manager.statuses",
+    "task_manager.tasks",
 ]
 
 MIDDLEWARE = [
@@ -150,7 +151,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Auth
-AUTH_USER_MODEL = "users.Users"
+AUTH_USER_MODEL = "users.User"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"

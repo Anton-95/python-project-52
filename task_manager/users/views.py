@@ -4,17 +4,17 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.shortcuts import redirect
 
 from task_manager.users.forms import CustomUsersCreateForm, CustomUsersUpdateForm
-from task_manager.users.models import Users
+from task_manager.users.models import User
 
 
 class UsersView(ListView):
-    model = Users
+    model = User
     template_name = "users/users.html"
     context_object_name = "users"
 
 
 class UsersCreateView(CreateView):
-    model = Users
+    model = User
     form_class = CustomUsersCreateForm
     template_name = "users/users_create.html"
     success_url = reverse_lazy("login")
@@ -31,7 +31,7 @@ class UsersCreateView(CreateView):
 
 
 class UsersUpdateView(UpdateView):
-    model = Users
+    model = User
     form_class = CustomUsersUpdateForm
     template_name = "users/users_create.html"
     success_url = reverse_lazy("users")
@@ -54,7 +54,7 @@ class UsersUpdateView(UpdateView):
 
 
 class UsersDeleteView(DeleteView):
-    model = Users
+    model = User
     template_name = "users/users_delete.html"
     success_url = reverse_lazy("users")
     context_object_name = "user"
