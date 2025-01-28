@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.db.models.deletion import ProtectedError
 
-from task_manager.statuses.forms import StatusCreateForm
 from task_manager.statuses.models import Status
 
 
@@ -20,7 +21,7 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
 class BaseStatusMixin:
     model = Status
     template_name = "statuses/status_create.html"
-    form_class = StatusCreateForm
+    fields = ['name']
     success_url = reverse_lazy("statuses")
 
 
@@ -65,5 +66,14 @@ class StatusDeleteView(DeleteView):
     success_url = reverse_lazy("statuses")
 
     def form_valid(self, form):
-        messages.success(self.request, "Статус успешно удален")
         return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        try:
+            response = super().post(request, *args, **kwargs)
+            messages.success(self.request, "Статус успешно удален")
+            return response
+        except ProtectedError:
+            messages.error(request, "Нельзя удалить статус связанный с задачей")
+            return redirect(self.success_url)
