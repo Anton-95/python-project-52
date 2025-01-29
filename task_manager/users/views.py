@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.shortcuts import redirect
+from django.db.models.deletion import ProtectedError
+
 
 from task_manager.users.forms import CustomUsersCreateForm, CustomUsersUpdateForm
 from task_manager.users.models import User
@@ -59,12 +61,17 @@ class UsersDeleteView(DeleteView):
     success_url = reverse_lazy("users")
     context_object_name = "user"
 
+    def post(self, request, *args, **kwargs):
+        try:
+            response = super().post(request, *args, **kwargs)
+            messages.success(self.request, "Пользователь успешно удален")
+            return response
+        except ProtectedError:
+            messages.error(request, "Нельзя удалить пользователя связанного с задачей")
+            return redirect(self.success_url)
+
     def dispatch(self, request, *args, **kwargs):
         if self.get_object() != self.request.user:
             messages.error(request, "Вы можете удалять только свой профиль.")
-            return redirect("users")
-        return super().dispatch(request=request, *args, **kwargs)
-
-    def form_valid(self, form):
-        messages.success(self.request, "Пользователь успешно удален")
-        return super().form_valid(form)
+            return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
