@@ -65,11 +65,7 @@ class StatusDeleteView(DeleteView):
     context_object_name = "status"
     success_url = reverse_lazy("statuses")
 
-    def form_valid(self, form):
-        return super().form_valid(form)
-
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
         try:
             response = super().post(request, *args, **kwargs)
             messages.success(self.request, "Статус успешно удален")
