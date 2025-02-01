@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container wrapper flex-grow-1">
 <h1 class="my-4">Метки</h1>
-<a class="btn btn-primary mb-3" href="/labels/create/">Создать метку</a>
+<a class="btn btn-primary mb-3" href="{% url 'label_create' %}">Создать метку</a>
 <table class="table table-striped">
 <thead>
   <tr>
@@ -20,9 +20,9 @@
       <td>{{ label.name }}</td>
       <td>{{ label.created_at }}</td>
       <td>
-        <a href="/labels/1/update/">Изменить</a>
+        <a href="{% url 'label_update' label.id %}">Изменить</a>
         <br>
-        <a href="/labels/1/delete/">Удалить</a>
+        <a href="{% url 'label_delete' label.id %}">Удалить</a>
       </td>
     </tr>
 {% endfor %}
