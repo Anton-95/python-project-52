@@ -2,6 +2,7 @@ from django.db import models
 
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
+from task_manager.labels.models import Label
 
 
 class Task(models.Model):
@@ -31,9 +32,9 @@ class Task(models.Model):
         blank=True,
         null=True
     )
-    # label = models.ManyToManyField(
-    #     "Label",
-    #     verbose_name="Метки",
-    #     related_name="tasks"
-    # )
+    label = models.ManyToManyField(
+        Label,
+        verbose_name="Метки",
+        related_name="tasks"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
