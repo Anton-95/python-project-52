@@ -8,7 +8,7 @@ from task_manager.statuses.views import CustomLoginRequiredMixin
 
 class BaseTaskMixin:
     model = Task
-    fields = ["name", "description", "status", "executor"]
+    fields = ["name", "description", "status", "label", "executor"]
     success_url = reverse_lazy("tasks")
 
 
