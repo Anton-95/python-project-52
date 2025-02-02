@@ -58,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "rollbar.contrib.django.middleware.RollbarNotifierMiddleware",
 ]
 
 if DEBUG:
@@ -160,3 +161,10 @@ LOGOUT_REDIRECT_URL = "index"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+ROLLBAR = {
+    "access_token": "ad169d1e016c452ebbf8f3c14c2a7c43",
+    "environment": "development" if DEBUG else "production",
+    "code_version": "1.0",
+    "root": BASE_DIR,
+}
