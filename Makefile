@@ -15,3 +15,6 @@ migrations:
 
 migrate:
 	uv run python manage.py migrate
+
+linter:
+	uv run ruff check task_manager
