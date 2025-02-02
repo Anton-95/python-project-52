@@ -1,9 +1,12 @@
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView, DetailView
-from task_manager.tasks.models import Task
-from django.contrib import messages
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
+from django_filters.views import FilterView
+
 from task_manager.statuses.views import CustomLoginRequiredMixin
+from task_manager.tasks.forms import TaskFilterForm
+from task_manager.tasks.models import Task
 
 
 class BaseTaskMixin:
@@ -12,9 +15,9 @@ class BaseTaskMixin:
     success_url = reverse_lazy("tasks")
 
 
-class TasksView(CustomLoginRequiredMixin, BaseTaskMixin, ListView):
+class TasksView(CustomLoginRequiredMixin, BaseTaskMixin, FilterView):
+    filterset_class = TaskFilterForm
     template_name = "tasks/tasks_list.html"
-    context_object_name = "tasks"
 
 
 class TaskCreateView(CustomLoginRequiredMixin, BaseTaskMixin, CreateView):
@@ -51,7 +54,13 @@ class TaskUpdateView(CustomLoginRequiredMixin, BaseTaskMixin, UpdateView):
 
 
 class TaskDeleteView(BaseTaskMixin, DeleteView):
-    template_name = "tasks/task_delete.html"
+    template_name = "delete_form.html"
+    context_object_name = "model"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "задачи"
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         task = self.get_object()
