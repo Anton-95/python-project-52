@@ -163,7 +163,7 @@ INTERNAL_IPS = [
 ]
 
 ROLLBAR = {
-    "access_token": "ad169d1e016c452ebbf8f3c14c2a7c43",
+    "access_token": os.getenv("ACCESS_ROLLBAR_TOKEN"),
     "environment": "development" if DEBUG else "production",
     "code_version": "1.0",
     "root": BASE_DIR,
