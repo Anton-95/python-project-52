@@ -1,6 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 class CustomLoginView(LoginView):

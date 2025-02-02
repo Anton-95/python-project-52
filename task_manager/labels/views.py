@@ -1,9 +1,10 @@
+from django.contrib import messages
 from django.forms import ValidationError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
 from task_manager.labels.models import Label
-from django.contrib import messages
 from task_manager.statuses.views import CustomLoginRequiredMixin
 
 
