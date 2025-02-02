@@ -12,7 +12,8 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(
-                request, ("Для доступа к этой странице необходимо войти в систему.")
+                request,
+                ("Для доступа к этой странице необходимо войти в систему.")
             )
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
@@ -61,9 +62,14 @@ class StatusUpdateView(CustomLoginRequiredMixin, BaseStatusMixin, UpdateView):
 
 class StatusDeleteView(DeleteView):
     model = Status
-    template_name = "statuses/status_delete.html"
-    context_object_name = "status"
+    template_name = "delete_form.html"
+    context_object_name = "model"
     success_url = reverse_lazy("statuses")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "статуса"
+        return context
 
     def post(self, request, *args, **kwargs):
         try:

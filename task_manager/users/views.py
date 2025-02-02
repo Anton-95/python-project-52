@@ -5,13 +5,16 @@ from django.shortcuts import redirect
 from django.db.models.deletion import ProtectedError
 
 
-from task_manager.users.forms import CustomUsersCreateForm, CustomUsersUpdateForm
+from task_manager.users.forms import (
+    CustomUsersCreateForm,
+    CustomUsersUpdateForm
+    )
 from task_manager.users.models import User
 
 
 class UsersView(ListView):
     model = User
-    template_name = "users/users.html"
+    template_name = "users/users_list.html"
     context_object_name = "users"
 
 
@@ -57,9 +60,14 @@ class UsersUpdateView(UpdateView):
 
 class UsersDeleteView(DeleteView):
     model = User
-    template_name = "users/users_delete.html"
+    template_name = "delete_form.html"
     success_url = reverse_lazy("users")
-    context_object_name = "user"
+    context_object_name = "model"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "пользователя"
+        return context
 
     def post(self, request, *args, **kwargs):
         try:
@@ -67,7 +75,10 @@ class UsersDeleteView(DeleteView):
             messages.success(self.request, "Пользователь успешно удален")
             return response
         except ProtectedError:
-            messages.error(request, "Нельзя удалить пользователя связанного с задачей")
+            messages.error(
+                request,
+                "Нельзя удалить пользователя связанного с задачей"
+                )
             return redirect(self.success_url)
 
     def dispatch(self, request, *args, **kwargs):

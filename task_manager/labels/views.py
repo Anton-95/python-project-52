@@ -55,7 +55,13 @@ class LabelUpdateView(CustomLoginRequiredMixin, LabelMixin, UpdateView):
 
 
 class LabelDeleteView(CustomLoginRequiredMixin, LabelMixin, DeleteView):
-    template_name = "labels/label_delete.html"
+    template_name = "delete_form.html"
+    context_object_name = "model"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "метки"
+        return context
 
     def post(self, request, *args, **kwargs):
         try:

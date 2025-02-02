@@ -1,8 +1,8 @@
 from django.db import models
 
+from task_manager.labels.models import Label
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
-from task_manager.labels.models import Label
 
 
 class Task(models.Model):
@@ -40,3 +40,9 @@ class Task(models.Model):
         null=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = "task"
