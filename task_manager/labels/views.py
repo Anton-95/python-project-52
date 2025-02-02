@@ -67,8 +67,10 @@ class LabelDeleteView(CustomLoginRequiredMixin, LabelMixin, DeleteView):
     def post(self, request, *args, **kwargs):
         try:
             response = super().post(request, *args, **kwargs)
-            messages.success(request, "Метка удалена")
+            messages.success(request, "Метка успешно удалена")
             return response
         except ValidationError:
-            messages.error(request, "Нельзя удалить метку связанную с задачей")
+            messages.error(
+                request, "Невозможно удалить метку, потому что она используется"
+            )
             return redirect("labels")

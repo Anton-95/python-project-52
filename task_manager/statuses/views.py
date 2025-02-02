@@ -13,8 +13,8 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
         if not request.user.is_authenticated:
             messages.error(
                 request,
-                ("Для доступа к этой странице необходимо войти в систему.")
-            )
+                ("Вы не авторизованы! Пожалуйста, выполните вход.")
+                )
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
 
@@ -77,5 +77,7 @@ class StatusDeleteView(DeleteView):
             messages.success(self.request, "Статус успешно удален")
             return response
         except ProtectedError:
-            messages.error(request, "Нельзя удалить статус связанный с задачей")
+            messages.error(
+                request, "Невозможно удалить статус, потому что он используется"
+            )
             return redirect(self.success_url)

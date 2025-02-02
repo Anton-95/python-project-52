@@ -24,7 +24,7 @@ class UsersCreateView(CreateView):
     success_url = reverse_lazy("login")
 
     def form_valid(self, form):
-        messages.success(self.request, "Пользователь успешно создан")
+        messages.success(self.request, "Пользователь успешно зарегистрирован")
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -52,7 +52,7 @@ class UsersUpdateView(UpdateView):
         return kwargs
 
     def form_valid(self, form):
-        messages.success(self.request, "Пользователь успешно обновлен")
+        messages.success(self.request, "Пользователь успешно изменен")
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -88,12 +88,15 @@ class UsersDeleteView(DeleteView):
         except ProtectedError:
             messages.error(
                 request,
-                "Нельзя удалить пользователя связанного с задачей"
-                )
+                "Невозможно удалить пользователя, потому что он используется"
+            )
             return redirect(self.success_url)
 
     def dispatch(self, request, *args, **kwargs):
         if self.get_object() != self.request.user:
-            messages.error(request, "Вы можете удалять только свой профиль.")
+            messages.error(
+                request,
+                "У вас нет прав для изменения другого пользователя."
+            )
             return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)

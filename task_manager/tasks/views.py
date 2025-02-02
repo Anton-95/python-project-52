@@ -43,7 +43,7 @@ class TaskUpdateView(CustomLoginRequiredMixin, BaseTaskMixin, UpdateView):
     template_name = "tasks/tasks_create.html"
 
     def form_valid(self, form):
-        messages.success(self.request, "Задача успешно обновлена")
+        messages.success(self.request, "Задача успешно изменена")
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -65,7 +65,7 @@ class TaskDeleteView(BaseTaskMixin, DeleteView):
     def dispatch(self, request, *args, **kwargs):
         task = self.get_object()
         if task.author != self.request.user:
-            messages.error(request, "Вы можете удалять только свои задачи")
+            messages.error(request, "Задачу может удалить только ее автор")
             return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
 
