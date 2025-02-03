@@ -4,13 +4,13 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
+from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
 from task_manager.statuses.views import CustomLoginRequiredMixin
 
 
 class LabelMixin:
     model = Label
-    fields = ["name"]
     success_url = reverse_lazy("labels")
 
 
@@ -20,6 +20,7 @@ class LabelsView(CustomLoginRequiredMixin, LabelMixin, ListView):
 
 
 class LabelCreateView(CustomLoginRequiredMixin, LabelMixin, CreateView):
+    form_class = LabelForm
     template_name = "labels/label_create.html"
 
     def form_valid(self, form):
@@ -38,6 +39,7 @@ class LabelCreateView(CustomLoginRequiredMixin, LabelMixin, CreateView):
 
 
 class LabelUpdateView(CustomLoginRequiredMixin, LabelMixin, UpdateView):
+    form_class = LabelForm
     template_name = "labels/label_create.html"
 
     def form_valid(self, form):

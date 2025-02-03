@@ -5,6 +5,36 @@ from task_manager.users.models import User
 
 
 class CustomUsersCreateForm(UserCreationForm):
+    first_name = forms.CharField(
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Имя"
+        }),
+    )
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Фамилия"}
+        ),
+    )
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Имя пользователя"}
+        ),
+    )
+    password1 = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Пароль"}
+        ),
+    )
+    password2 = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Подтверждение пароля"
+                }
+        ),
+    )
+
     class Meta:
         model = User
         fields = [
