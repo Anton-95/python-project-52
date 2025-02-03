@@ -25,7 +25,7 @@
     </div>
     <div class="row p-1">
       <div class="col">Дата создания</div>
-      <div class="col">{{ task.created_at }}</div>
+      <div class="col">{{ task.created_at|date:"d.m.Y H:i" }}</div>
     </div>
     <div class="row p-1">
       <div class="col">

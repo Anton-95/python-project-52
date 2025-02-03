@@ -33,7 +33,7 @@
       <td>{{ obj.status }}</td>
       <td>{{ obj.author }}</td>
       <td>{{ obj.executor }}</td>
-      <td>{{ obj.created_at }}</td>
+      <td>{{ obj.created_at|date:"d.m.Y H:i" }}</td>
       <td>
         <a href="{% url 'task_update' obj.id %}">Изменить</a>
         <br>
