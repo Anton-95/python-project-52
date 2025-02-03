@@ -30,7 +30,7 @@ class UsersCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Регистрация"
-        context["button"] = "Зарегистрироваться"
+        context["button"] = "Зарегистрировать"
         return context
 
 
