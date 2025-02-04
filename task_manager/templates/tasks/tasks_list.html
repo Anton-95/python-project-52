@@ -6,10 +6,37 @@
 <a class="btn btn-primary mb-3" href="{% url 'task_create' %}" role="button">Создать задачу</a>
 
 
-    <form method="get">
+    {% comment %} <form method="get">
         {{ filter.form.as_p }}
         <input type="submit" value="Показать"/>
+    </form> {% endcomment %}
+
+<div class="card mb-3">
+  <div class="card-body bg-light">
+    <form class="form-inline center" method="get">
+      <div class="mb-3">
+        <label class="form-label" for="id_status">Статус</label>
+          {{ filter.form.status }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="id_executor">Исполнитель</label>
+          {{ filter.form.executor }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="id_label">Метка</label>
+          {{ filter.form.label }}
+      </div>
+        <div class="mb-3">
+          <div class="form-check">
+            {{ filter.form.self_tasks }}
+          {% comment %} <input type="checkbox" name="self_tasks" class="form-check-input mr-3" id="id_self_tasks"> {% endcomment %}
+          <label class="form-check-label" for="id_self_tasks">Только свои задачи</label>
+        </div>
+      </div>
+      <input class="btn btn-primary" type="submit" value="Показать">
     </form>
+  </div>
+</div>
 
 <table class="table table-striped">
 <thead>

@@ -5,46 +5,28 @@
 <h1 class="my-4">{{ title }}</h1>
 
 <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-primary" type="submit" value="{{ button }}">
-</form>
-{% comment %} <form method="post">
 {% csrf_token %}
 <div class="mb-3">
     <label class="form-label" for="id_name">Имя</label>
-    <input type="text" name="name" maxlength="150" class="form-control" placeholder="Имя" required id="id_name">
+    {{ form.name }}
 </div>
 <div class="mb-3">
     <label class="form-label" for="id_description">Описание</label>
-    <textarea name="description" cols="40" rows="10" class="form-control" placeholder="Описание" id="id_description"></textarea>
+    {{ form.description }}
 </div>
 <div class="mb-3">
 <label class="form-label" for="id_status">Статус</label>
-    <select name="status" class="form-select" required id="id_status">
-    <option value="" selected>---------</option>
-    <option value="1">Статус  изм.1</option>
-    </select>
+    {{ form.status }}
 </div>
 <div class="mb-3">
 <label class="form-label" for="id_executor">Исполнитель</label>
-<select name="executor" class="form-select" id="id_executor">
-    <option value="" selected>---------</option>
-<option value="1">Имя изм. Фамилия</option>
-<option value="2">1 2</option>
-<option value="3">Anton Nazarov</option>
-<option value="5">D F</option>
-</select>
+    {{ form.executor }}
 </div>
 <div class="mb-3">
-<label class="form-label" for="id_labels">Метки</label>
-<select name="labels" class="form-select" id="id_labels" multiple>
-<option value="1">Метка изм.1</option>
-<option value="3">метка 2</option>
-</select>
+    {{ form.label }}
 </div>
-  <input class="btn btn-primary" type="submit" value="Создать">
-</form> {% endcomment %}
+  <input class="btn btn-primary" type="submit" value="{{ button }}">
+</form>
 
 </div>
 {% endblock content %}

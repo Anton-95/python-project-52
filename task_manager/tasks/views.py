@@ -5,13 +5,12 @@ from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django_filters.views import FilterView
 
 from task_manager.statuses.views import CustomLoginRequiredMixin
-from task_manager.tasks.forms import TaskFilterForm
+from task_manager.tasks.forms import TaskCreateForm, TaskFilterForm
 from task_manager.tasks.models import Task
 
 
 class BaseTaskMixin:
     model = Task
-    fields = ["name", "description", "status", "label", "executor"]
     success_url = reverse_lazy("tasks")
 
 
@@ -22,6 +21,7 @@ class TasksView(CustomLoginRequiredMixin, BaseTaskMixin, FilterView):
 
 class TaskCreateView(CustomLoginRequiredMixin, BaseTaskMixin, CreateView):
     template_name = "tasks/tasks_create.html"
+    form_class = TaskCreateForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -41,6 +41,7 @@ class TaskDetailView(CustomLoginRequiredMixin, BaseTaskMixin, DetailView):
 
 class TaskUpdateView(CustomLoginRequiredMixin, BaseTaskMixin, UpdateView):
     template_name = "tasks/tasks_create.html"
+    form_class = TaskCreateForm
 
     def form_valid(self, form):
         messages.success(self.request, "Задача успешно изменена")
