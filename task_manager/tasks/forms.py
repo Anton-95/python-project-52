@@ -55,5 +55,9 @@ class TaskCreateForm(forms.ModelForm):
             ),
             "status": forms.Select(attrs={"class": "form-select"}),
             "executor": forms.Select(attrs={"class": "form-select"}),
-            "label": forms.SelectMultiple(attrs={"class": "form-select"}),
+            "label": forms.SelectMultiple(
+                attrs={
+                    "class": "form-select",
+                    "id": "id_labels"
+                    }),
         }
