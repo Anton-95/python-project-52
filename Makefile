@@ -2,7 +2,7 @@ install:
 	uv sync
 
 dev:
-	uv run python manage.py runserver 8090
+	uv run python manage.py runserver 9090
 
 start-render:
 	gunicorn task_manager.wsgi:application --bind 0.0.0.0:8000
@@ -18,3 +18,6 @@ migrate:
 
 linter:
 	uv run ruff check task_manager
+
+test:
+	uv run manage.py test
