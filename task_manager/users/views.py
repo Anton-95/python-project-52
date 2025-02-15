@@ -43,7 +43,8 @@ class UsersUpdateView(CustomLoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
-        if request.user.is_authenticated and self.get_object() != self.request.user:
+        if request.user.is_authenticated and \
+            self.get_object() != self.request.user:
             messages.error(
                 request, "У вас нет прав для изменения другого пользователя."
             )
@@ -98,7 +99,8 @@ class UsersDeleteView(CustomLoginRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
-        if request.user.is_authenticated and self.get_object() != self.request.user:
+        if request.user.is_authenticated and \
+            self.get_object() != self.request.user:
             messages.error(
                 request,
                 "У вас нет прав для изменения другого пользователя."
