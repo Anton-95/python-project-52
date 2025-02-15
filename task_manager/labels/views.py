@@ -6,7 +6,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
-from task_manager.statuses.views import CustomLoginRequiredMixin
+from task_manager.views import CustomLoginRequiredMixin
 
 
 class LabelMixin:

@@ -1,6 +1,19 @@
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+
+
+class CustomLoginRequiredMixin(LoginRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(
+                request, ("Вы не авторизованы! Пожалуйста, выполните вход.")
+                )
+            return redirect(reverse_lazy("login"))
+        return super().dispatch(request, *args, **kwargs)
 
 
 class CustomLoginView(LoginView):
@@ -15,7 +28,7 @@ class CustomLoginView(LoginView):
         messages.error(
             self.request,
             """Пожалуйста, введите правильные имя пользователя и пароль.
-            Оба поля могут быть чувствительны к регистру."""
+            Оба поля могут быть чувствительны к регистру.""",
         )
         return super().form_invalid(form)
 

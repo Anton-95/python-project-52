@@ -4,9 +4,9 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django_filters.views import FilterView
 
-from task_manager.statuses.views import CustomLoginRequiredMixin
 from task_manager.tasks.forms import TaskCreateForm, TaskFilterForm
 from task_manager.tasks.models import Task
+from task_manager.views import CustomLoginRequiredMixin
 
 
 class BaseTaskMixin:

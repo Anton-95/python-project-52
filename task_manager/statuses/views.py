@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.deletion import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -7,17 +6,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.statuses.forms import StatusForm
 from task_manager.statuses.models import Status
-
-
-class CustomLoginRequiredMixin(LoginRequiredMixin):
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(
-                request,
-                ("Вы не авторизованы! Пожалуйста, выполните вход.")
-                )
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+from task_manager.views import CustomLoginRequiredMixin
 
 
 class BaseStatusMixin:
