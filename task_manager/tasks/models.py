@@ -37,7 +37,6 @@ class Task(models.Model):
         verbose_name="Метки",
         related_name="tasks",
         blank=True,
-        null=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
