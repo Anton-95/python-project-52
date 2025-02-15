@@ -5,7 +5,6 @@
 <h1 class="my-4">Вход</h1>
 <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next }}">
     <div class="mb-3"><label class="form-label" for="id_username">Имя пользователя</label>
         <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" class="form-control" placeholder="Имя пользователя" required id="id_username">
     </div>
