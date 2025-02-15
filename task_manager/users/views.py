@@ -9,6 +9,7 @@ from task_manager.users.forms import (
     CustomUsersUpdateForm,
 )
 from task_manager.users.models import User
+from task_manager.views import CustomLoginRequiredMixin
 
 
 class UsersView(ListView):
@@ -34,17 +35,20 @@ class UsersCreateView(CreateView):
         return context
 
 
-class UsersUpdateView(UpdateView):
+class UsersUpdateView(CustomLoginRequiredMixin, UpdateView):
     model = User
     form_class = CustomUsersUpdateForm
     template_name = "users/users_create.html"
     success_url = reverse_lazy("users")
 
     def dispatch(self, request, *args, **kwargs):
-        if self.get_object() != self.request.user:
-            messages.error(request, "Вы можете изменять только свой профиль.")
+        response = super().dispatch(request, *args, **kwargs)
+        if request.user.is_authenticated and self.get_object() != self.request.user:
+            messages.error(
+                request, "У вас нет прав для изменения другого пользователя."
+            )
             return redirect("users")
-        return super().dispatch(request=request, *args, **kwargs)
+        return response
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -69,7 +73,7 @@ class UsersUpdateView(UpdateView):
         return context
 
 
-class UsersDeleteView(DeleteView):
+class UsersDeleteView(CustomLoginRequiredMixin, DeleteView):
     model = User
     template_name = "delete_form.html"
     success_url = reverse_lazy("users")
@@ -92,11 +96,12 @@ class UsersDeleteView(DeleteView):
             )
             return redirect(self.success_url)
 
-    def dispatch(self, request, *args, **kwargs):
-        if self.get_object() != self.request.user:
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        if request.user.is_authenticated and self.get_object() != self.request.user:
             messages.error(
                 request,
                 "У вас нет прав для изменения другого пользователя."
-            )
+                )
             return redirect(self.success_url)
-        return super().dispatch(request, *args, **kwargs)
+        return response
