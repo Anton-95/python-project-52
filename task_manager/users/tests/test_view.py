@@ -24,29 +24,70 @@ class TestUserViews(UserTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("login"))
 
-    def test_del_unauthorized_user(self):
+    def test_del_unauth_user(self):
         response = self.client.get(
             reverse_lazy("users_delete", kwargs={"pk": 1})
             )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("login"))
 
-    def test_del_authorized_user(self):
-        user_1 = self.user_1
-        self.client.force_login(user_1)
+    def test_del_auth_user(self):
+        user = self.user_1
+        self.client.force_login(user)
         users_count = User.objects.count()
 
         response = self.client.get(
-            reverse_lazy("users_delete", kwargs={"pk": user_1.id})
+            reverse_lazy("users_delete", kwargs={"pk": user.id})
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "delete_form.html")
 
         response = self.client.post(
-            reverse_lazy("users_delete", kwargs={"pk": user_1.id})
+            reverse_lazy("users_delete", kwargs={"pk": user.id})
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("users"))
         self.assertEqual(User.objects.count(), users_count - 1)
         with self.assertRaises(User.DoesNotExist):
-            User.objects.get(id=user_1.id)
+            User.objects.get(id=user.id)
+
+    def test_update_unauth_user(self):
+        response = self.client.get(
+            reverse_lazy("users_update", kwargs={"pk": 1})
+            )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse_lazy("login"))
+
+    def test_update_auth_user(self):
+        user = self.user_1
+        update_user_data = self.user_data
+        self.client.force_login(user)
+
+        response = self.client.get(
+            reverse_lazy("users_update", kwargs={"pk": user.id})
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "users/users_create.html")
+
+        response = self.client.post(
+            reverse_lazy("users_update", kwargs={"pk": user.id}),
+            update_user_data
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse_lazy("users"))
+        updated_user = User.objects.get(id=user.id)
+        self.assertEqual(updated_user.username, "Incognito")
+        self.assertEqual(updated_user.first_name, "John")
+        self.assertEqual(updated_user.last_name, "Doe")
+
+    def test_update_another_user(self):
+        user = self.user_1
+        another_user = self.user_2
+        self.client.force_login(user)
+
+        response = self.client.get(
+            reverse_lazy("users_update", kwargs={"pk": another_user.id})
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse_lazy("users"))
+
