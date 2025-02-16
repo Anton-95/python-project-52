@@ -8,7 +8,5 @@ class TestLabelForm(LabelTestCase):
         self.assertTrue(form.is_valid())
 
     def test_blank_form(self):
-        data = self.label_data
-        data["name"] = ''
-        form = LabelForm(data)
+        form = LabelForm({"name": ""})
         self.assertFalse(form.is_valid())

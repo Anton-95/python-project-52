@@ -105,6 +105,7 @@ class TestLabelViews(LabelTestCase):
 
     def test_label_del_unauth_user(self):
         label = self.label_1
+        label_count = self.label_count
 
         response = self.client.get(
             reverse_lazy("label_delete", kwargs={"pk": label.id})
@@ -117,3 +118,4 @@ class TestLabelViews(LabelTestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("login"))
+        self.assertEqual(Label.objects.count(), label_count)
