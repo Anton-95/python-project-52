@@ -20,7 +20,7 @@ class StatusesView(CustomLoginRequiredMixin, ListView):
     context_object_name = "statuses"
 
 
-class StatusCreateView(BaseStatusMixin, CreateView):
+class StatusCreateView(CustomLoginRequiredMixin, BaseStatusMixin, CreateView):
     form_class = StatusForm
     template_name = "statuses/status_create.html"
 
@@ -54,7 +54,7 @@ class StatusUpdateView(CustomLoginRequiredMixin, BaseStatusMixin, UpdateView):
         return context
 
 
-class StatusDeleteView(DeleteView):
+class StatusDeleteView(CustomLoginRequiredMixin, DeleteView):
     model = Status
     template_name = "delete_form.html"
     context_object_name = "model"
