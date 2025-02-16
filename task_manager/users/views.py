@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.db.models.deletion import ProtectedError
+from django.forms import ValidationError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -41,31 +42,31 @@ class UsersUpdateView(CustomLoginRequiredMixin, UpdateView):
     template_name = "users/users_create.html"
     success_url = reverse_lazy("users")
 
-    def dispatch(self, request, *args, **kwargs):
-        response = super().dispatch(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
         if request.user.is_authenticated and \
             self.get_object() != self.request.user:
             messages.error(
                 request, "У вас нет прав для изменения другого пользователя."
             )
-            return redirect("users")
+            return redirect(self.success_url)
         return response
+
+    def post(self, request, *args, **kwargs):
+        try:
+            response = super().post(request, *args, **kwargs)
+            messages.success(self.request, "Пользователь успешно изменен")
+            return response
+        except ValidationError:
+            messages.error(
+                request, "Пользователь с таким именем уже существует"
+                )
+            return redirect(self.success_url)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
-
-    def form_valid(self, form):
-        messages.success(self.request, "Пользователь успешно изменен")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(
-            self.request,
-            "Пользователь с таким именем уже существует"
-            )
-        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
