@@ -54,7 +54,7 @@ class TaskUpdateView(CustomLoginRequiredMixin, BaseTaskMixin, UpdateView):
         return context
 
 
-class TaskDeleteView(BaseTaskMixin, DeleteView):
+class TaskDeleteView(CustomLoginRequiredMixin, BaseTaskMixin, DeleteView):
     template_name = "delete_form.html"
     context_object_name = "model"
 
@@ -63,12 +63,13 @@ class TaskDeleteView(BaseTaskMixin, DeleteView):
         context["title"] = "задачи"
         return context
 
-    def dispatch(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
         task = self.get_object()
         if task.author != self.request.user:
-            messages.error(request, "Задачу может удалить только ее автор")
+            messages.error(request, "Задачу может удалить только ее автор.")
             return redirect(self.success_url)
-        return super().dispatch(request, *args, **kwargs)
+        return response
 
     def form_valid(self, form):
         messages.success(self.request, "Задача успешно удалена")
