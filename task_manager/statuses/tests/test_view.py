@@ -6,7 +6,7 @@ from task_manager.statuses.tests.test_case import StatusTestCase
 
 class TestStatusView(StatusTestCase):
     def test_get_statuses_auth_user(self):
-        user = self.user_1
+        user = self.user
         status_count = self.status_count
         self.client.force_login(user)
 
@@ -21,7 +21,7 @@ class TestStatusView(StatusTestCase):
         self.assertRedirects(response, reverse_lazy("login"))
 
     def test_create_status_auth_user(self):
-        user = self.user_1
+        user = self.user
         status_data = self.status_data
         status_count = self.status_count
         self.client.force_login(user)
@@ -47,24 +47,24 @@ class TestStatusView(StatusTestCase):
         self.assertRedirects(response, reverse_lazy("login"))
 
     def test_update_status_auth_user(self):
-        user = self.user_1
-        status = self.status_1
+        user = self.user
+        status = self.status
         self.client.force_login(user)
 
         response = self.client.get(
             reverse_lazy("status_update", kwargs={"pk": status.id})
-            )
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "statuses/status_create.html")
 
         response = self.client.post(
             reverse_lazy("status_update", kwargs={"pk": status.id})
-            )
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "statuses/status_create.html")
 
     def test_update_status_unauth_user(self):
-        status = self.status_1
+        status = self.status
 
         response = self.client.get(
             reverse_lazy("status_update", kwargs={"pk": status.id})
@@ -79,14 +79,14 @@ class TestStatusView(StatusTestCase):
         self.assertRedirects(response, reverse_lazy("login"))
 
     def test_del_status_auth_user(self):
-        user = self.user_1
-        status = self.status_1
+        user = self.user
+        status = self.status
         status_count = self.status_count
         self.client.force_login(user)
 
         response = self.client.get(
             reverse_lazy("status_delete", kwargs={"pk": status.id})
-            )
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "delete_form.html")
 
@@ -100,7 +100,7 @@ class TestStatusView(StatusTestCase):
             Status.objects.get(id=status.id)
 
     def test_del_status_unauth_user(self):
-        status = self.status_1
+        status = self.status
         status_count = self.status_count
 
         response = self.client.get(

@@ -10,8 +10,6 @@ class LabelTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.label_count = Label.objects.count()
-        self.label_1 = Label.objects.get(pk=1)
-        self.label_2 = Label.objects.get(pk=2)
-        self.user_1 = User.objects.get(pk=1)
-        self.user_2 = User.objects.get(pk=2)
+        self.label = Label.objects.get(pk=1)
+        self.user = User.objects.get(pk=1)
         self.label_data = {"name": "wontfix"}

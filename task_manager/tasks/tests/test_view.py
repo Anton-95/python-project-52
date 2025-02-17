@@ -51,7 +51,9 @@ class TestTaskView(TaskTestCase):
         task = self.task
         self.client.force_login(user)
 
-        response = self.client.get(reverse_lazy("task_detail", kwargs={"pk": task.id}))
+        response = self.client.get(
+            reverse_lazy("task_detail", kwargs={"pk": task.id})
+            )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "tasks/task_detail.html")
         self.assertEqual(response.context["task"], task)
@@ -59,7 +61,9 @@ class TestTaskView(TaskTestCase):
     def test_detail_task_unauth_user(self):
         task = self.task
 
-        response = self.client.get(reverse_lazy("task_detail", kwargs={"pk": task.id}))
+        response = self.client.get(
+            reverse_lazy("task_detail", kwargs={"pk": task.id})
+            )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("login"))
 
@@ -69,7 +73,9 @@ class TestTaskView(TaskTestCase):
         task_data = self.task_data
         self.client.force_login(user)
 
-        response = self.client.get(reverse_lazy("task_update", kwargs={"pk": task.id}))
+        response = self.client.get(
+            reverse_lazy("task_update", kwargs={"pk": task.id})
+            )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "tasks/tasks_create.html")
 
@@ -85,7 +91,9 @@ class TestTaskView(TaskTestCase):
         task = self.task
         task_data = self.task_data
 
-        response = self.client.get(reverse_lazy("task_update", kwargs={"pk": task.id}))
+        response = self.client.get(
+            reverse_lazy("task_update", kwargs={"pk": task.id})
+            )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("login"))
 

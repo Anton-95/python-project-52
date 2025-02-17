@@ -10,7 +10,6 @@ class StatusTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.status_count = Status.objects.count()
-        self.status_1 = Status.objects.get(pk=1)
-        self.status_2 = Status.objects.get(pk=2)
-        self.user_1 = User.objects.get(pk=1)
+        self.status = Status.objects.get(pk=1)
+        self.user = User.objects.get(pk=1)
         self.status_data = {"name": "on break"}

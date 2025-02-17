@@ -6,7 +6,7 @@ from task_manager.labels.tests.test_case import LabelTestCase
 
 class TestLabelViews(LabelTestCase):
     def test_get_labels_auth_user(self):
-        user = self.user_1
+        user = self.user
         self.client.force_login(user)
 
         response = self.client.get(reverse_lazy("labels"))
@@ -20,7 +20,7 @@ class TestLabelViews(LabelTestCase):
         self.assertRedirects(response, reverse_lazy("login"))
 
     def test_label_create_auth_user(self):
-        user = self.user_1
+        user = self.user
         label_count = self.label_count
         self.client.force_login(user)
 
@@ -47,14 +47,14 @@ class TestLabelViews(LabelTestCase):
         self.assertRedirects(response, reverse_lazy("login"))
 
     def test_label_update_auth_user(self):
-        user = self.user_1
-        label = self.label_1
+        user = self.user
+        label = self.label
         update_label_data = self.label_data
         self.client.force_login(user)
 
         response = self.client.get(
             reverse_lazy("label_update", kwargs={"pk": label.id})
-            )
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "labels/label_create.html")
 
@@ -68,11 +68,11 @@ class TestLabelViews(LabelTestCase):
         self.assertEqual(updated_label.name, update_label_data["name"])
 
     def test_label_update_unauth_user(self):
-        label = self.label_1
+        label = self.label
 
         response = self.client.get(
             reverse_lazy("label_update", kwargs={"pk": label.id})
-            )
+        )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("login"))
 
@@ -83,14 +83,14 @@ class TestLabelViews(LabelTestCase):
         self.assertRedirects(response, reverse_lazy("login"))
 
     def test_label_del_auth_user(self):
-        user = self.user_1
-        label = self.label_1
+        user = self.user
+        label = self.label
         label_count = self.label_count
         self.client.force_login(user)
 
         response = self.client.get(
             reverse_lazy("label_delete", kwargs={"pk": label.id})
-            )
+        )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "delete_form.html")
 
@@ -104,7 +104,7 @@ class TestLabelViews(LabelTestCase):
             Label.objects.get(id=label.id)
 
     def test_label_del_unauth_user(self):
-        label = self.label_1
+        label = self.label
         label_count = self.label_count
 
         response = self.client.get(
