@@ -1,11 +1,10 @@
 from django.contrib import messages
-from django.db.models.deletion import ProtectedError
 from django.forms import ValidationError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views import View
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
+from task_manager.mixins import DeleteValidationMixin
 from task_manager.users.forms import (
     CustomUsersCreateForm,
     CustomUsersUpdateForm,
@@ -14,7 +13,7 @@ from task_manager.users.models import User
 from task_manager.views import LoginRequiredMixin
 
 
-class UserOwnersipCheckMixin(View):
+class UserOwnersipCheckMixin:
     def dispatch(self, request, *args, **kwargs):
         if self.get_object() != self.request.user:
             messages.error(
@@ -66,21 +65,19 @@ class UsersUpdateView(LoginRequiredMixin, UserOwnersipCheckMixin, UpdateView):
         return kwargs
 
 
-class UsersDeleteView(LoginRequiredMixin, UserOwnersipCheckMixin, DeleteView):
+class UsersDeleteView(
+    LoginRequiredMixin,
+    DeleteValidationMixin,
+    UserOwnersipCheckMixin,
+    DeleteView
+):
     model = User
     template_name = "delete_form.html"
     success_url = reverse_lazy("users")
     context_object_name = "model"
     extra_context = dict(title="пользователя")
+    msg_success = "Пользователь успешно удален"
+    msg_error = "Невозможно удалить пользователя, потому что он используется"
 
-    def post(self, request, *args, **kwargs):
-        try:
-            response = super().post(request, *args, **kwargs)
-            messages.success(self.request, "Пользователь успешно удален")
-            return response
-        except ProtectedError:
-            messages.error(
-                request,
-                "Невозможно удалить пользователя, потому что он используется"
-            )
-            return redirect(self.success_url)
+    def is_protected(self):
+        return self.object.tasks.exists()
