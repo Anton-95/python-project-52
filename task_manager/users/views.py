@@ -47,6 +47,10 @@ class UsersUpdateView(LoginRequiredMixin, UserOwnersipCheckMixin, UpdateView):
     success_url = reverse_lazy("users")
     extra_context = dict(title="Изменение пользователя", button="Изменить")
 
+    def post(self, request, *args, **kwargs):
+        messages.success(request, "Пользователь успешно изменен")
+        return super().post(request, *args, **kwargs)
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
