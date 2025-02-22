@@ -26,7 +26,7 @@ class TestTaskView(TaskTestCase):
 
         response = self.client.get(reverse_lazy("task_create"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "tasks/tasks_create.html")
+        self.assertTemplateUsed(response, "form.html")
 
         response = self.client.post(reverse_lazy("task_create"), task_data)
         self.assertEqual(response.status_code, 302)
@@ -77,7 +77,7 @@ class TestTaskView(TaskTestCase):
             reverse_lazy("task_update", kwargs={"pk": task.id})
             )
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "tasks/tasks_create.html")
+        self.assertTemplateUsed(response, "form.html")
 
         response = self.client.post(
             reverse_lazy("task_update", kwargs={"pk": task.id}), task_data

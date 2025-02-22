@@ -21,7 +21,7 @@ class StatusesView(LoginRequiredMixin, ListView):
 
 class StatusCreateView(LoginRequiredMixin, BaseStatusMixin, CreateView):
     form_class = StatusForm
-    template_name = "statuses/status_create.html"
+    template_name = "form.html"
     extra_context = dict(title="Создать статус", button="Создать")
 
     def form_valid(self, form):
@@ -35,7 +35,7 @@ class StatusCreateView(LoginRequiredMixin, BaseStatusMixin, CreateView):
 
 class StatusUpdateView(LoginRequiredMixin, BaseStatusMixin, UpdateView):
     form_class = StatusForm
-    template_name = "statuses/status_create.html"
+    template_name = "form.html"
     extra_context = dict(title="Изменить статус", button="Изменить")
 
     def form_valid(self, form):

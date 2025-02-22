@@ -17,7 +17,7 @@ class TestUserViews(UserTestCase):
 
         response = self.client.get(reverse_lazy("users_create"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("users/users_create.html")
+        self.assertTemplateUsed("form.html")
 
         response = self.client.post(reverse_lazy("users_create"), user_data)
         self.assertEqual(User.objects.count(), user_count + 1)
@@ -67,7 +67,7 @@ class TestUserViews(UserTestCase):
             reverse_lazy("users_update", kwargs={"pk": user.id})
         )
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "users/users_create.html")
+        self.assertTemplateUsed(response, "form.html")
 
         response = self.client.post(
             reverse_lazy("users_update", kwargs={"pk": user.id}),
@@ -90,4 +90,3 @@ class TestUserViews(UserTestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("users"))
-

@@ -20,7 +20,7 @@ class TasksView(LoginRequiredMixin, BaseTaskMixin, FilterView):
 
 
 class TaskCreateView(LoginRequiredMixin, BaseTaskMixin, CreateView):
-    template_name = "tasks/tasks_create.html"
+    template_name = "form.html"
     form_class = TaskCreateForm
     extra_context = dict(title="Создать задачу", button="Создать")
 
@@ -35,7 +35,7 @@ class TaskDetailView(LoginRequiredMixin, BaseTaskMixin, DetailView):
 
 
 class TaskUpdateView(LoginRequiredMixin, BaseTaskMixin, UpdateView):
-    template_name = "tasks/tasks_create.html"
+    template_name = "form.html"
     form_class = TaskCreateForm
     extra_context = dict(title="Изменение задачи", button="Изменить")
 

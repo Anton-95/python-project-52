@@ -18,8 +18,9 @@ class LoginRequiredMixin(LoginRequired):
 
 
 class LoginView(UserLoginView):
-    template_name = "login.html"
+    template_name = "form.html"
     form_class = AuthForm
+    extra_context = dict(title="Вход", button="Войти")
 
     def form_valid(self, form):
         messages.success(self.request, "Вы залогинены")

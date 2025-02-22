@@ -20,7 +20,7 @@ class LabelsView(LoginRequiredMixin, LabelMixin, ListView):
 
 class LabelCreateView(LoginRequiredMixin, LabelMixin, CreateView):
     form_class = LabelForm
-    template_name = "labels/label_create.html"
+    template_name = "form.html"
     extra_context = dict(title="Создать метку", button="Создать")
 
     def form_valid(self, form):
@@ -34,7 +34,7 @@ class LabelCreateView(LoginRequiredMixin, LabelMixin, CreateView):
 
 class LabelUpdateView(LoginRequiredMixin, LabelMixin, UpdateView):
     form_class = LabelForm
-    template_name = "labels/label_create.html"
+    template_name = "form.html"
     extra_context = dict(title="Изменение метки", button="Изменить")
 
     def form_valid(self, form):

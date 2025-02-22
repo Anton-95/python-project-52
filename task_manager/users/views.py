@@ -32,7 +32,7 @@ class UsersView(ListView):
 class UsersCreateView(CreateView):
     model = User
     form_class = CustomUsersCreateForm
-    template_name = "users/users_create.html"
+    template_name = "form.html"
     success_url = reverse_lazy("login")
     extra_context = dict(title="Регистрация", button="Зарегистрировать")
 
@@ -44,7 +44,7 @@ class UsersCreateView(CreateView):
 class UsersUpdateView(LoginRequiredMixin, UserOwnersipCheckMixin, UpdateView):
     model = User
     form_class = CustomUsersUpdateForm
-    template_name = "users/users_create.html"
+    template_name = "form.html"
     success_url = reverse_lazy("users")
     extra_context = dict(title="Изменение пользователя", button="Изменить")
 

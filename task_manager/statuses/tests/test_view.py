@@ -28,7 +28,7 @@ class TestStatusView(StatusTestCase):
 
         response = self.client.get(reverse_lazy("status_create"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "statuses/status_create.html")
+        self.assertTemplateUsed(response, "form.html")
 
         response = self.client.post(reverse_lazy("status_create"), status_data)
         self.assertEqual(response.status_code, 302)
@@ -55,13 +55,13 @@ class TestStatusView(StatusTestCase):
             reverse_lazy("status_update", kwargs={"pk": status.id})
         )
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "statuses/status_create.html")
+        self.assertTemplateUsed(response, "form.html")
 
         response = self.client.post(
             reverse_lazy("status_update", kwargs={"pk": status.id})
         )
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "statuses/status_create.html")
+        self.assertTemplateUsed(response, "form.html")
 
     def test_update_status_unauth_user(self):
         status = self.status
