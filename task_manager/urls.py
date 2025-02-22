@@ -10,11 +10,11 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", TemplateView.as_view(template_name="index.html"), name="index"),
     path("users/", include("task_manager.users.urls")),
-    path("login/", views.CustomLoginView.as_view(), name="login"),
-    path("logout/", views.CustomLogoutView.as_view(), name="logout"),
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
     path("statuses/", include("task_manager.statuses.urls")),
     path("tasks/", include("task_manager.tasks.urls")),
-    path("labels/", include("task_manager.labels.urls"))
+    path("labels/", include("task_manager.labels.urls")),
 ]
 
 if settings.DEBUG:

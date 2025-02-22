@@ -6,7 +6,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from task_manager.labels.forms import LabelForm
 from task_manager.labels.models import Label
-from task_manager.views import CustomLoginRequiredMixin
+from task_manager.views import LoginRequiredMixin
 
 
 class LabelMixin:
@@ -14,12 +14,12 @@ class LabelMixin:
     success_url = reverse_lazy("labels")
 
 
-class LabelsView(CustomLoginRequiredMixin, LabelMixin, ListView):
+class LabelsView(LoginRequiredMixin, LabelMixin, ListView):
     template_name = "labels/labels_list.html"
     context_object_name = "labels"
 
 
-class LabelCreateView(CustomLoginRequiredMixin, LabelMixin, CreateView):
+class LabelCreateView(LoginRequiredMixin, LabelMixin, CreateView):
     form_class = LabelForm
     template_name = "labels/label_create.html"
 
@@ -38,7 +38,7 @@ class LabelCreateView(CustomLoginRequiredMixin, LabelMixin, CreateView):
         return context
 
 
-class LabelUpdateView(CustomLoginRequiredMixin, LabelMixin, UpdateView):
+class LabelUpdateView(LoginRequiredMixin, LabelMixin, UpdateView):
     form_class = LabelForm
     template_name = "labels/label_create.html"
 
@@ -57,7 +57,7 @@ class LabelUpdateView(CustomLoginRequiredMixin, LabelMixin, UpdateView):
         return context
 
 
-class LabelDeleteView(CustomLoginRequiredMixin, LabelMixin, DeleteView):
+class LabelDeleteView(LoginRequiredMixin, LabelMixin, DeleteView):
     template_name = "delete_form.html"
     context_object_name = "model"
 

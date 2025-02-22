@@ -10,7 +10,7 @@ from task_manager.users.forms import (
     CustomUsersUpdateForm,
 )
 from task_manager.users.models import User
-from task_manager.views import CustomLoginRequiredMixin
+from task_manager.views import LoginRequiredMixin
 
 
 class UsersView(ListView):
@@ -36,7 +36,7 @@ class UsersCreateView(CreateView):
         return context
 
 
-class UsersUpdateView(CustomLoginRequiredMixin, UpdateView):
+class UsersUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = CustomUsersUpdateForm
     template_name = "users/users_create.html"
@@ -75,7 +75,7 @@ class UsersUpdateView(CustomLoginRequiredMixin, UpdateView):
         return context
 
 
-class UsersDeleteView(CustomLoginRequiredMixin, DeleteView):
+class UsersDeleteView(LoginRequiredMixin, DeleteView):
     model = User
     template_name = "delete_form.html"
     success_url = reverse_lazy("users")

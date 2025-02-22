@@ -1,12 +1,13 @@
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import AuthenticationForm as AuthForm
+from django.contrib.auth.mixins import LoginRequiredMixin as LoginRequired
+from django.contrib.auth.views import LoginView as UserLoginView
+from django.contrib.auth.views import LogoutView as UserLogoutView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 
-class CustomLoginRequiredMixin(LoginRequiredMixin):
+class LoginRequiredMixin(LoginRequired):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(
@@ -16,9 +17,9 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-class CustomLoginView(LoginView):
+class LoginView(UserLoginView):
     template_name = "login.html"
-    form_class = AuthenticationForm
+    form_class = AuthForm
 
     def form_valid(self, form):
         messages.success(self.request, "Вы залогинены")
@@ -33,7 +34,7 @@ class CustomLoginView(LoginView):
         return super().form_invalid(form)
 
 
-class CustomLogoutView(LogoutView):
+class LogoutView(UserLogoutView):
     def dispatch(self, request, *args, **kwargs):
         messages.info(request, "Вы разлогинены")
         return super().dispatch(request, *args, **kwargs)

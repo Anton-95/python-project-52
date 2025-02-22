@@ -6,7 +6,7 @@ from django_filters.views import FilterView
 
 from task_manager.tasks.forms import TaskCreateForm, TaskFilterForm
 from task_manager.tasks.models import Task
-from task_manager.views import CustomLoginRequiredMixin
+from task_manager.views import LoginRequiredMixin
 
 
 class BaseTaskMixin:
@@ -14,12 +14,12 @@ class BaseTaskMixin:
     success_url = reverse_lazy("tasks")
 
 
-class TasksView(CustomLoginRequiredMixin, BaseTaskMixin, FilterView):
+class TasksView(LoginRequiredMixin, BaseTaskMixin, FilterView):
     filterset_class = TaskFilterForm
     template_name = "tasks/tasks_list.html"
 
 
-class TaskCreateView(CustomLoginRequiredMixin, BaseTaskMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, BaseTaskMixin, CreateView):
     template_name = "tasks/tasks_create.html"
     form_class = TaskCreateForm
 
@@ -35,11 +35,11 @@ class TaskCreateView(CustomLoginRequiredMixin, BaseTaskMixin, CreateView):
         return super().form_valid(form)
 
 
-class TaskDetailView(CustomLoginRequiredMixin, BaseTaskMixin, DetailView):
+class TaskDetailView(LoginRequiredMixin, BaseTaskMixin, DetailView):
     template_name = "tasks/task_detail.html"
 
 
-class TaskUpdateView(CustomLoginRequiredMixin, BaseTaskMixin, UpdateView):
+class TaskUpdateView(LoginRequiredMixin, BaseTaskMixin, UpdateView):
     template_name = "tasks/tasks_create.html"
     form_class = TaskCreateForm
 
@@ -54,7 +54,7 @@ class TaskUpdateView(CustomLoginRequiredMixin, BaseTaskMixin, UpdateView):
         return context
 
 
-class TaskDeleteView(CustomLoginRequiredMixin, BaseTaskMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin, BaseTaskMixin, DeleteView):
     template_name = "delete_form.html"
     context_object_name = "model"
 
