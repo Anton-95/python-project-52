@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.forms import ValidationError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
