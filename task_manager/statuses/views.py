@@ -23,6 +23,7 @@ class StatusesView(LoginRequiredMixin, ListView):
 class StatusCreateView(LoginRequiredMixin, BaseStatusMixin, CreateView):
     form_class = StatusForm
     template_name = "statuses/status_create.html"
+    extra_context = dict(title="Создать статус", button="Создать")
 
     def form_valid(self, form):
         messages.success(self.request, "Статус успешно создан")
@@ -32,26 +33,15 @@ class StatusCreateView(LoginRequiredMixin, BaseStatusMixin, CreateView):
         messages.error(self.request, "Статус с таким именем уже существует.")
         return super().form_invalid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Создать статус"
-        context["button"] = "Создать"
-        return context
-
 
 class StatusUpdateView(LoginRequiredMixin, BaseStatusMixin, UpdateView):
     form_class = StatusForm
     template_name = "statuses/status_create.html"
+    extra_context = dict(title="Изменить статус", button="Изменить")
 
     def form_valid(self, form):
         messages.success(self.request, "Статус успешно изменен")
         return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Изменить статус"
-        context["button"] = "Изменить"
-        return context
 
 
 class StatusDeleteView(LoginRequiredMixin, DeleteView):
@@ -59,11 +49,7 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "delete_form.html"
     context_object_name = "model"
     success_url = reverse_lazy("statuses")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "статуса"
-        return context
+    extra_context = dict(title="статуса")
 
     def post(self, request, *args, **kwargs):
         try:

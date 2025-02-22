@@ -22,12 +22,7 @@ class TasksView(LoginRequiredMixin, BaseTaskMixin, FilterView):
 class TaskCreateView(LoginRequiredMixin, BaseTaskMixin, CreateView):
     template_name = "tasks/tasks_create.html"
     form_class = TaskCreateForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Создать задачу"
-        context["button"] = "Создать"
-        return context
+    extra_context = dict(title="Создать задачу", button="Создать")
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -42,26 +37,17 @@ class TaskDetailView(LoginRequiredMixin, BaseTaskMixin, DetailView):
 class TaskUpdateView(LoginRequiredMixin, BaseTaskMixin, UpdateView):
     template_name = "tasks/tasks_create.html"
     form_class = TaskCreateForm
+    extra_context = dict(title="Изменение задачи", button="Изменить")
 
     def form_valid(self, form):
         messages.success(self.request, "Задача успешно изменена")
         return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Изменение задачи"
-        context["button"] = "Изменить"
-        return context
-
 
 class TaskDeleteView(LoginRequiredMixin, BaseTaskMixin, DeleteView):
     template_name = "delete_form.html"
     context_object_name = "model"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "задачи"
-        return context
+    extra_context = dict(title="задачи")
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)

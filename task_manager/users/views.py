@@ -24,16 +24,11 @@ class UsersCreateView(CreateView):
     form_class = CustomUsersCreateForm
     template_name = "users/users_create.html"
     success_url = reverse_lazy("login")
+    extra_context = dict(title="Регистрация", button="Зарегистрировать")
 
     def form_valid(self, form):
         messages.success(self.request, "Пользователь успешно зарегистрирован")
         return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Регистрация"
-        context["button"] = "Зарегистрировать"
-        return context
 
 
 class UsersUpdateView(LoginRequiredMixin, UpdateView):
@@ -41,6 +36,7 @@ class UsersUpdateView(LoginRequiredMixin, UpdateView):
     form_class = CustomUsersUpdateForm
     template_name = "users/users_create.html"
     success_url = reverse_lazy("users")
+    extra_context = dict(title="Изменение пользователя", button="Изменить")
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -68,23 +64,13 @@ class UsersUpdateView(LoginRequiredMixin, UpdateView):
         kwargs['user'] = self.request.user
         return kwargs
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Изменение пользователя"
-        context["button"] = "Изменить"
-        return context
-
 
 class UsersDeleteView(LoginRequiredMixin, DeleteView):
     model = User
     template_name = "delete_form.html"
     success_url = reverse_lazy("users")
     context_object_name = "model"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = "пользователя"
-        return context
+    extra_context = dict(title="пользователя")
 
     def post(self, request, *args, **kwargs):
         try:
