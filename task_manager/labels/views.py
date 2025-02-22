@@ -54,6 +54,3 @@ class LabelDeleteView(
     extra_context = dict(title="метки")
     msg_success = "Метка успешно удалена"
     msg_error = "Невозможно удалить метку, потому что она используется"
-
-    def is_protected(self):
-        return self.object.tasks.exists()

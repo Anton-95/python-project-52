@@ -78,6 +78,3 @@ class UsersDeleteView(
     extra_context = dict(title="пользователя")
     msg_success = "Пользователь успешно удален"
     msg_error = "Невозможно удалить пользователя, потому что он используется"
-
-    def is_protected(self):
-        return self.object.tasks.exists()

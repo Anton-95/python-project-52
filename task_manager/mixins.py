@@ -5,13 +5,6 @@ from django.shortcuts import redirect
 
 
 class DeleteValidationMixin:
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if self.is_protected():
-            messages.error(request, self.msg_error)
-            return redirect(self.success_url)
-        return super().get(request, *args, **kwargs)
-
     def post(self, request, *args, **kwargs):
         try:
             response = super().post(request, *args, **kwargs)

@@ -51,6 +51,3 @@ class StatusDeleteView(LoginRequiredMixin, DeleteValidationMixin, DeleteView):
     extra_context = dict(title="статуса")
     msg_success = "Статус успешно удален"
     msg_error = "Невозможно удалить статус, потому что он используется"
-
-    def is_protected(self):
-        return self.object.tasks.exists()
