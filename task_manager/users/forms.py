@@ -67,3 +67,10 @@ class CustomUsersUpdateForm(CustomUsersCreateForm):
                     "Пользователь с таким именем уже существует"
                     )
         return username
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 != password2:
+            raise forms.ValidationError("Пароли должны совпадать")
+        return password2

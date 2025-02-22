@@ -48,17 +48,6 @@ class UsersUpdateView(LoginRequiredMixin, UserOwnersipCheckMixin, UpdateView):
     success_url = reverse_lazy("users")
     extra_context = dict(title="Изменение пользователя", button="Изменить")
 
-    def post(self, request, *args, **kwargs):
-        try:
-            response = super().post(request, *args, **kwargs)
-            messages.success(self.request, "Пользователь успешно изменен")
-            return response
-        except ValidationError:
-            messages.error(
-                request, "Пользователь с таким именем уже существует"
-                )
-            return redirect(self.success_url)
-
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
