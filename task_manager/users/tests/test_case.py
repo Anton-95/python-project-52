@@ -16,6 +16,6 @@ class UserTestCase(TestCase):
             "first_name": "John",
             "last_name": "Doe",
             "username": "Incognito",
-            "password1": "123",
-            "password2": "123",
+            "password1": "sdg-56u-xJi-RTx",
+            "password2": "sdg-56u-xJi-RTx",
         }
