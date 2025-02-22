@@ -35,7 +35,9 @@ class CustomUsersCreateForm(UserCreationForm):
     )
     password2 = forms.CharField(
         widget=forms.TextInput(
-            attrs={"class": "form-control", "placeholder": "Подтверждение пароля"}
+            attrs={
+                "class": "form-control", "placeholder": "Подтверждение пароля"
+            }
         ),
         label="Подтверждение пароля",
         help_text="Для подтверждения введите, пожалуйста, пароль ещё раз.",
